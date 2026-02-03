@@ -15,7 +15,7 @@ interface Project {
   order?: number;
 }
 
-const SERVICES = ['Production', 'Mixing', 'Mastering', 'Drums'] as const;
+const SERVICES = ['Production', 'Mixing', 'Mastering', 'Drums', 'Songwriting'] as const;
 
 // Import all project JSON files from the content folder
 const projectModules = import.meta.glob<{ default: Project }>('../../content/projects/*.json', { eager: true });

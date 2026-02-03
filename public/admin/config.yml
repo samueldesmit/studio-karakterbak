@@ -135,3 +135,17 @@ collections:
               widget: "markdown",
               required: false,
             }
+          - label: "Studio Pictures"
+            name: "pictures"
+            widget: "list"
+            required: false
+            hint: "Add pictures to showcase the studio"
+            fields:
+              - { label: "Image", name: "image", widget: "image" }
+              - {
+                  label: "Caption",
+                  name: "caption",
+                  widget: "string",
+                  required: false,
+                  hint: "Optional description for this picture",
+                }

@@ -1,32 +1,23 @@
 import { useState, useEffect } from 'react';
 import './TheStudio.css';
 
-// Import images from assets
-import floraSophi from '../assets/flora-sophi.jpeg';
-import josephin from '../assets/josephin.jpeg';
-import juliet from '../assets/juliet.jpeg';
-import jungleByNight from '../assets/jungle-by-noght.jpg';
-import mauritsNijhuis from '../assets/maurits_nijhuis.jpeg';
-import neko from '../assets/neko.jpeg';
-import philisGlass from '../assets/philis-glass.jpeg';
-import signeDoWays from '../assets/signe-do-ways.jpeg';
-import theSunsetSociety from '../assets/the-sunset-society.jpeg';
-import xilan from '../assets/Xilan.jpeg';
+interface StudioPicture {
+  image: string;
+  caption?: string;
+}
 
-const images = [
-  { src: floraSophi, alt: 'Flora Sophi' },
-  { src: josephin, alt: 'Josephin' },
-  { src: juliet, alt: 'Juliet' },
-  { src: jungleByNight, alt: 'Jungle by Night' },
-  { src: mauritsNijhuis, alt: 'Maurits Nijhuis' },
-  { src: neko, alt: 'Neko' },
-  { src: philisGlass, alt: 'Philis Glass' },
-  { src: signeDoWays, alt: 'Signe do Ways' },
-  { src: theSunsetSociety, alt: 'The Sunset Society' },
-  { src: xilan, alt: 'Xilan' },
-];
+interface StudioSettings {
+  title: string;
+  aboutText: string;
+  pictures: StudioPicture[];
+}
+
+// Import studio settings from CMS content at build time
+const studioModule = import.meta.glob<{ default: StudioSettings }>('../../content/settings/studio.json', { eager: true });
+const studioSettings: StudioSettings = Object.values(studioModule)[0]?.default || { title: '', aboutText: '', pictures: [] };
 
 export default function TheStudio() {
+  const [pictures] = useState<StudioPicture[]>(studioSettings.pictures || []);
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
 
   const openModal = (image: { src: string; alt: string }) => {
@@ -56,16 +47,26 @@ export default function TheStudio() {
     };
   }, [selectedImage]);
 
+  if (pictures.length === 0) {
+    return (
+      <div className="studio-page">
+        <div className="studio-empty">
+          <p>No studio pictures yet.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="studio-page">
       <div className="collage">
-        {images.map((image, index) => (
+        {pictures.map((picture, index) => (
           <div 
             key={index} 
             className="collage-item"
-            onClick={() => openModal(image)}
+            onClick={() => openModal({ src: picture.image, alt: picture.caption || 'Studio picture' })}
           >
-            <img src={image.src} alt={image.alt} />
+            <img src={picture.image} alt={picture.caption || 'Studio picture'} />
           </div>
         ))}
       </div>
@@ -79,6 +80,9 @@ export default function TheStudio() {
             alt={selectedImage.alt} 
             onClick={(e) => e.stopPropagation()}
           />
+          {selectedImage.alt && selectedImage.alt !== 'Studio picture' && (
+            <p className="modal-caption">{selectedImage.alt}</p>
+          )}
         </div>
       )}
     </div>
