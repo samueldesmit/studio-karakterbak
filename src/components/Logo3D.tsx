@@ -1,15 +1,21 @@
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, Float, ContactShadows } from '@react-three/drei';
+import { useGLTF, Environment, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-function Logo({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y: number }>; scale: number }) {
+interface PhysicsState {
+  position: { x: number; y: number };
+  velocity: { x: number; y: number };
+  rotation: { x: number; y: number };
+  spinVelocity: { x: number; y: number };
+}
+
+function Logo({ physics, scale }: { physics: React.MutableRefObject<PhysicsState>; scale: number }) {
   const { scene } = useGLTF('/logo_studio.glb');
   const meshRef = useRef<THREE.Group>(null);
 
   const baseRotationX = Math.PI / 2;
 
-  // Enable shadows on the model
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
@@ -21,46 +27,29 @@ function Logo({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y: 
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Smooth follow drag rotation
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(
-        meshRef.current.rotation.y,
-        mouse.current.y,
-        0.1
-      );
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(
-        meshRef.current.rotation.x,
-        baseRotationX + mouse.current.x,
-        0.1
-      );
-
-      // Gentle back and forth rotation on z-axis
+      meshRef.current.position.x = physics.current.position.x;
+      meshRef.current.position.y = physics.current.position.y + Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      meshRef.current.rotation.y = physics.current.rotation.y;
+      meshRef.current.rotation.x = baseRotationX + physics.current.rotation.x;
       meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.8) * 0.15;
-
-      // Subtle floating animation
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
     }
   });
 
   return (
-    <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
-      <primitive
-        ref={meshRef}
-        object={scene}
-        scale={scale}
-        position={[0, 0, 0]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
-    </Float>
+    <primitive
+      ref={meshRef}
+      object={scene}
+      scale={scale}
+      position={[0, 0, 0]}
+      rotation={[-Math.PI / 2, 0, 0]}
+    />
   );
 }
 
-function Scene({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y: number }>; scale: number }) {
+function Scene({ physics, scale }: { physics: React.MutableRefObject<PhysicsState>; scale: number }) {
   return (
     <>
-      {/* Ambient light for base illumination */}
       <ambientLight intensity={0.4} />
-
-      {/* Main directional light with shadows */}
       <directionalLight
         position={[5, 8, 5]}
         intensity={1.2}
@@ -72,14 +61,8 @@ function Scene({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y:
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-
-      {/* Fill light from the opposite side */}
       <directionalLight position={[-5, 5, -5]} intensity={0.5} />
-
-      {/* Rim light for edge highlights */}
       <pointLight position={[0, -5, 5]} intensity={0.6} color="#fff5e6" />
-
-      {/* Spot light for dramatic effect */}
       <spotLight
         position={[0, 10, 0]}
         angle={0.3}
@@ -87,10 +70,7 @@ function Scene({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y:
         intensity={0.8}
         castShadow
       />
-
-      <Logo mouse={mouse} scale={scale} />
-      
-      {/* Contact shadows beneath the logo */}
+      <Logo physics={physics} scale={scale} />
       <ContactShadows
         position={[0, -5, 0]}
         opacity={0.6}
@@ -99,17 +79,24 @@ function Scene({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y:
         far={6}
         color="#000000"
       />
-
       <Environment preset="city" />
     </>
   );
 }
 
 export default function Logo3D() {
-  const rotation = useRef({ x: 0, y: 0 });
+  const physics = useRef<PhysicsState>({
+    position: { x: 0, y: 0 },
+    velocity: { x: 0, y: 0 },
+    rotation: { x: 0, y: 0 },
+    spinVelocity: { x: 0, y: 0 },
+  });
   const lastPos = useRef({ x: 0, y: 0 });
+  const lastTime = useRef(Date.now());
   const isDragging = useRef(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const bounds = { x: 8, y: 5 };
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -117,18 +104,87 @@ export default function Logo3D() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Physics loop
+  useEffect(() => {
+    let animationId: number;
+
+    const updatePhysics = () => {
+      if (!isDragging.current) {
+        const p = physics.current;
+
+        // Apply velocity to position
+        p.position.x += p.velocity.x;
+        p.position.y += p.velocity.y;
+
+        // Apply spin velocity to rotation
+        p.rotation.x += p.spinVelocity.x;
+        p.rotation.y += p.spinVelocity.y;
+
+        // No friction - keeps moving forever like in space!
+
+        // Bounce off walls
+        if (p.position.x > bounds.x) {
+          p.position.x = bounds.x;
+          p.velocity.x *= -1;
+          p.spinVelocity.y += p.velocity.x * 0.3;
+        } else if (p.position.x < -bounds.x) {
+          p.position.x = -bounds.x;
+          p.velocity.x *= -1;
+          p.spinVelocity.y += p.velocity.x * 0.3;
+        }
+
+        if (p.position.y > bounds.y) {
+          p.position.y = bounds.y;
+          p.velocity.y *= -1;
+          p.spinVelocity.x += p.velocity.y * 0.3;
+        } else if (p.position.y < -bounds.y) {
+          p.position.y = -bounds.y;
+          p.velocity.y *= -1;
+          p.spinVelocity.x += p.velocity.y * 0.3;
+        }
+      }
+
+      animationId = requestAnimationFrame(updatePhysics);
+    };
+
+    animationId = requestAnimationFrame(updatePhysics);
+    return () => cancelAnimationFrame(animationId);
+  }, []);
+
   const handleStart = (clientX: number, clientY: number) => {
     isDragging.current = true;
     lastPos.current = { x: clientX, y: clientY };
+    lastTime.current = Date.now();
+    physics.current.velocity = { x: 0, y: 0 };
+    physics.current.spinVelocity = { x: 0, y: 0 };
   };
 
   const handleMove = (clientX: number, clientY: number) => {
     if (!isDragging.current) return;
+
+    const now = Date.now();
+    const dt = Math.max(now - lastTime.current, 1);
     const deltaX = clientX - lastPos.current.x;
     const deltaY = clientY - lastPos.current.y;
-    rotation.current.y += deltaX * 0.01;
-    rotation.current.x += deltaY * 0.01;
+
+    // Move position
+    const worldDelta = {
+      x: (deltaX / window.innerWidth) * bounds.x * 2,
+      y: -(deltaY / window.innerHeight) * bounds.y * 2,
+    };
+    physics.current.position.x += worldDelta.x;
+    physics.current.position.y += worldDelta.y;
+
+    // Track velocity for throwing
+    physics.current.velocity.x = worldDelta.x * (5 / dt);
+    physics.current.velocity.y = worldDelta.y * (5 / dt);
+
+    // Add spin based on movement
+    physics.current.spinVelocity.x = deltaY * 0.002;
+    physics.current.spinVelocity.y = deltaX * 0.002;
+
     lastPos.current = { x: clientX, y: clientY };
+    lastTime.current = now;
   };
 
   const handleEnd = () => {
@@ -166,9 +222,9 @@ export default function Logo3D() {
       <Canvas
         shadows
         camera={{ position: [0, 0, 15], fov: 50 }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', pointerEvents: 'none' }}
       >
-        <Scene mouse={rotation} scale={scale} />
+        <Scene physics={physics} scale={scale} />
       </Canvas>
     </div>
   );
