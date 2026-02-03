@@ -1,5 +1,10 @@
 {
   "title": "The Studio",
   "aboutText": "",
-  "pictures": []
+  "pictures": [
+    {
+      "image": "/uploads/fuis.jpeg",
+      "caption": "FUIS | Here's to asking for help"
+    }
+  ]
 }
