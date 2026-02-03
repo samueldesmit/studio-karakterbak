@@ -1,0 +1,46 @@
+.page {
+  min-height: 100vh;
+  padding: 6rem 3rem 3rem;
+  position: relative;
+}
+
+/* Decorative accents */
+.page::before,
+.page::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page::before {
+  width: 500px;
+  height: 500px;
+  background: var(--color-gold);
+  top: -100px;
+  right: -150px;
+  opacity: 0.4;
+}
+
+.page::after {
+  width: 700px;
+  height: 700px;
+  background: var(--color-burgundy);
+  bottom: -150px;
+  left: -100px;
+  opacity: 0.45;
+}
+
+.page h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 300;
+  margin-bottom: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.page p {
+  font-size: 1.125rem;
+  color: #666;
+}
