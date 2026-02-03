@@ -1,0 +1,11 @@
+{
+  "id": "neko",
+  "artist": "Neko",
+  "title": "Album Title",
+  "year": 2022,
+  "services": ["Production", "Mixing", "Mastering"],
+  "image": "/uploads/neko.jpeg",
+  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
+  "featured": false,
+  "order": 7
+}

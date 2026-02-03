@@ -1,0 +1,11 @@
+{
+  "id": "fuis",
+  "artist": "FUIS",
+  "title": "Album Title",
+  "year": 2023,
+  "services": ["Production", "Mixing"],
+  "image": "/uploads/fuis.jpeg",
+  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
+  "featured": false,
+  "order": 4
+}

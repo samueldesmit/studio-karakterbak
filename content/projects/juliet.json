@@ -1,0 +1,11 @@
+{
+  "id": "juliet",
+  "artist": "Juliet",
+  "title": "Album Title",
+  "year": 2022,
+  "services": ["Mixing", "Mastering"],
+  "image": "/uploads/juliet.jpeg",
+  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
+  "featured": false,
+  "order": 6
+}

@@ -1,0 +1,11 @@
+{
+  "id": "xilan",
+  "artist": "Xilan",
+  "title": "Album Title",
+  "year": 2024,
+  "services": ["Production", "Mixing", "Mastering"],
+  "image": "/uploads/xilan.jpeg",
+  "spotifyEmbed": "https://open.spotify.com/embed/artist/4NTqnS8zPIpfzdNBcqK8Ly?utm_source=generator",
+  "featured": false,
+  "order": 2
+}

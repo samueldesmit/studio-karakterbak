@@ -1,0 +1,11 @@
+{
+  "id": "jungle-by-night",
+  "artist": "Jungle by Night",
+  "title": "Album Title",
+  "year": 2024,
+  "services": ["Mixing"],
+  "image": "/uploads/jungle-by-night.jpg",
+  "spotifyEmbed": "https://open.spotify.com/embed/artist/2StcyX3fmelae5agBHIkDO?utm_source=generator",
+  "featured": true,
+  "order": 1
+}

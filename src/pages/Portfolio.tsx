@@ -1,18 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SpotifyEmbed from '../components/SpotifyEmbed';
 import logoPng from '../assets/Logo studio.png';
 import './Portfolio.css';
-
-import xilanImg from '../assets/Xilan.jpeg';
-import floraSophiImg from '../assets/flora-sophi.jpeg';
-import fuisImg from '../assets/fuis-persfoto-kopie-1024x682-url_hero_lg.jpeg';
-import josephinImg from '../assets/josephin.jpeg';
-import julietImg from '../assets/juliet.jpeg';
-import jungleByNightImg from '../assets/jungle-by-noght.jpg';
-import nekoImg from '../assets/neko.jpeg';
-import philipGlassImg from '../assets/philis-glass.jpeg';
-import signeImg from '../assets/signe-do-ways.jpeg';
-import sunsetSocietyImg from '../assets/the-sunset-society.jpeg';
 
 interface Project {
   id: string;
@@ -22,105 +11,27 @@ interface Project {
   services: string[];
   image: string;
   spotifyEmbed: string;
+  featured?: boolean;
+  order?: number;
 }
 
 const SERVICES = ['Production', 'Mixing', 'Mastering', 'Drums'] as const;
 
-const projects: Project[] = [
-  {
-    id: 'jungle-by-night',
-    artist: 'Jungle by Night',
-    title: 'Album Title',
-    year: 2024,
-    services: ['Mixing'],
-    image: jungleByNightImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/artist/2StcyX3fmelae5agBHIkDO?utm_source=generator',
-  },
-  {
-    id: 'xilan',
-    artist: 'Xilan',
-    title: 'Album Title',
-    year: 2024,
-    services: ['Production', 'Mixing', 'Mastering'],
-    image: xilanImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/artist/4NTqnS8zPIpfzdNBcqK8Ly?utm_source=generator',
-  },
-  {
-    id: 'flora-sophi',
-    artist: 'Flora Sophi',
-    title: 'Album Title',
-    year: 2023,
-    services: ['Mixing', 'Mastering'],
-    image: floraSophiImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'fuis',
-    artist: 'FUIS',
-    title: 'Album Title',
-    year: 2023,
-    services: ['Production', 'Mixing'],
-    image: fuisImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'josephin',
-    artist: 'Josephin',
-    title: 'Album Title',
-    year: 2023,
-    services: ['Production', 'Drums'],
-    image: josephinImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'juliet',
-    artist: 'Juliet',
-    title: 'Album Title',
-    year: 2022,
-    services: ['Mixing', 'Mastering'],
-    image: julietImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'neko',
-    artist: 'Neko',
-    title: 'Album Title',
-    year: 2022,
-    services: ['Production', 'Mixing', 'Mastering'],
-    image: nekoImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'philip-glass',
-    artist: 'Philip Glass',
-    title: 'Album Title',
-    year: 2022,
-    services: ['Drums'],
-    image: philipGlassImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'signe',
-    artist: 'Signe',
-    title: 'Album Title',
-    year: 2021,
-    services: ['Production', 'Mixing'],
-    image: signeImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-  {
-    id: 'sunset-society',
-    artist: 'The Sunset Society',
-    title: 'Album Title',
-    year: 2021,
-    services: ['Production', 'Mixing', 'Mastering', 'Drums'],
-    image: sunsetSocietyImg,
-    spotifyEmbed: 'https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator',
-  },
-];
+// Import all project JSON files from the content folder
+const projectModules = import.meta.glob<{ default: Project }>('../../content/projects/*.json', { eager: true });
+
+// Convert modules to projects array and sort by order
+const loadedProjects: Project[] = Object.values(projectModules)
+  .map((module) => module.default)
+  .sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
 
 export default function Portfolio() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [projects, setProjects] = useState<Project[]>(loadedProjects);
+
+  useEffect(() => {
+    setProjects(loadedProjects);
+  }, []);
 
   const toggleFilter = (service: string) => {
     setActiveFilters((prev) =>
