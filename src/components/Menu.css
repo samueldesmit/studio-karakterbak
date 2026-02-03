@@ -48,7 +48,7 @@
   position: fixed;
   top: 24px;
   right: 1rem;
-  background: linear-gradient(135deg, rgba(250, 245, 238, 0.85), rgba(239, 232, 220, 0.9));
+  background: linear-gradient(135deg, rgba(250, 245, 238, 0.5), rgba(239, 232, 220, 0.55));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 1.5rem 1.5rem;

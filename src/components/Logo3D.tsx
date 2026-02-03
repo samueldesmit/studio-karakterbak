@@ -1,9 +1,9 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment, Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-function Logo({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) {
+function Logo({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y: number }>; scale: number }) {
   const { scene } = useGLTF('/logo_studio.glb');
   const meshRef = useRef<THREE.Group>(null);
 
@@ -21,16 +21,16 @@ function Logo({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number 
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Smooth follow mouse (add to base rotation)
+      // Smooth follow drag rotation
       meshRef.current.rotation.y = THREE.MathUtils.lerp(
         meshRef.current.rotation.y,
-        mouse.current.x * 0.3,
-        0.05
+        mouse.current.y,
+        0.1
       );
       meshRef.current.rotation.x = THREE.MathUtils.lerp(
         meshRef.current.rotation.x,
-        baseRotationX + mouse.current.y * 0.2,
-        0.05
+        baseRotationX + mouse.current.x,
+        0.1
       );
 
       // Gentle back and forth rotation on z-axis
@@ -46,7 +46,7 @@ function Logo({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number 
       <primitive
         ref={meshRef}
         object={scene}
-        scale={0.15}
+        scale={scale}
         position={[0, 0, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
       />
@@ -54,16 +54,16 @@ function Logo({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number 
   );
 }
 
-function Scene({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number }> }) {
+function Scene({ mouse, scale }: { mouse: React.MutableRefObject<{ x: number; y: number }>; scale: number }) {
   return (
     <>
       {/* Ambient light for base illumination */}
       <ambientLight intensity={0.4} />
-      
+
       {/* Main directional light with shadows */}
-      <directionalLight 
-        position={[5, 8, 5]} 
-        intensity={1.2} 
+      <directionalLight
+        position={[5, 8, 5]}
+        intensity={1.2}
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-camera-far={50}
@@ -72,23 +72,23 @@ function Scene({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
         shadow-camera-top={10}
         shadow-camera-bottom={-10}
       />
-      
+
       {/* Fill light from the opposite side */}
       <directionalLight position={[-5, 5, -5]} intensity={0.5} />
-      
+
       {/* Rim light for edge highlights */}
       <pointLight position={[0, -5, 5]} intensity={0.6} color="#fff5e6" />
-      
+
       {/* Spot light for dramatic effect */}
-      <spotLight 
-        position={[0, 10, 0]} 
-        angle={0.3} 
-        penumbra={1} 
+      <spotLight
+        position={[0, 10, 0]}
+        angle={0.3}
+        penumbra={1}
         intensity={0.8}
         castShadow
       />
 
-      <Logo mouse={mouse} />
+      <Logo mouse={mouse} scale={scale} />
       
       {/* Contact shadows beneath the logo */}
       <ContactShadows
@@ -106,24 +106,69 @@ function Scene({ mouse }: { mouse: React.MutableRefObject<{ x: number; y: number
 }
 
 export default function Logo3D() {
-  const mouse = useRef({ x: 0, y: 0 });
+  const rotation = useRef({ x: 0, y: 0 });
+  const lastPos = useRef({ x: 0, y: 0 });
+  const isDragging = useRef(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    mouse.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleStart = (clientX: number, clientY: number) => {
+    isDragging.current = true;
+    lastPos.current = { x: clientX, y: clientY };
   };
+
+  const handleMove = (clientX: number, clientY: number) => {
+    if (!isDragging.current) return;
+    const deltaX = clientX - lastPos.current.x;
+    const deltaY = clientY - lastPos.current.y;
+    rotation.current.y += deltaX * 0.01;
+    rotation.current.x += deltaY * 0.01;
+    lastPos.current = { x: clientX, y: clientY };
+  };
+
+  const handleEnd = () => {
+    isDragging.current = false;
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => handleStart(e.clientX, e.clientY);
+  const handleMouseMove = (e: React.MouseEvent) => handleMove(e.clientX, e.clientY);
+  const handleMouseUp = () => handleEnd();
+  const handleMouseLeave = () => handleEnd();
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleStart(touch.clientX, touch.clientY);
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    handleMove(touch.clientX, touch.clientY);
+  };
+  const handleTouchEnd = () => handleEnd();
+
+  const scale = isMobile ? 0.075 : 0.15;
 
   return (
     <div
-      style={{ width: '100%', height: '100%' }}
+      style={{ width: '100%', height: '100%', cursor: 'grab' }}
+      onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <Canvas
         shadows
         camera={{ position: [0, 0, 15], fov: 50 }}
         style={{ background: 'transparent' }}
       >
-        <Scene mouse={mouse} />
+        <Scene mouse={rotation} scale={scale} />
       </Canvas>
     </div>
   );
