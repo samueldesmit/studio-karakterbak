@@ -18,39 +18,55 @@ export default function Menu() {
     setIsOpen(true);
 
     // Animate hamburger to X
-    gsap.to(line1Ref.current, { rotation: 45, y: 7, duration: 0.15, ease: 'power2.inOut' });
-    gsap.to(line2Ref.current, { opacity: 0, duration: 0.1, ease: 'power2.inOut' });
-    gsap.to(line3Ref.current, { rotation: -45, y: -7, duration: 0.15, ease: 'power2.inOut' });
+    gsap.to(line1Ref.current, { rotation: 45, y: 7, duration: 0.3, ease: 'power3.inOut' });
+    gsap.to(line2Ref.current, { opacity: 0, duration: 0.2, ease: 'power2.inOut' });
+    gsap.to(line3Ref.current, { rotation: -45, y: -7, duration: 0.3, ease: 'power3.inOut' });
 
-    // Animate modal in
-    gsap.fromTo(menuRef.current,
-      { opacity: 0, scale: 0.9, transformOrigin: 'top right' },
-      { opacity: 1, scale: 1, duration: 0.2, ease: 'power3.out' }
-    );
-
-    // Animate nav links
+    // Animate nav expansion
     if (navRef.current) {
+      gsap.to(navRef.current, {
+        maxHeight: 300,
+        maxWidth: 200,
+        opacity: 1,
+        paddingTop: '1rem',
+        duration: 0.35,
+        ease: 'power3.out'
+      });
+
+      // Animate nav links
       gsap.fromTo(navRef.current.children,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.2, stagger: 0.05, ease: 'power2.out', delay: 0.05 }
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power3.out', delay: 0.15 }
       );
     }
   };
 
   const closeMenu = () => {
     // Animate X to hamburger
-    gsap.to(line1Ref.current, { rotation: 0, y: 0, duration: 0.15, ease: 'power2.inOut' });
-    gsap.to(line2Ref.current, { opacity: 1, duration: 0.1, ease: 'power2.inOut', delay: 0.05 });
-    gsap.to(line3Ref.current, { rotation: 0, y: 0, duration: 0.15, ease: 'power2.inOut' });
+    gsap.to(line1Ref.current, { rotation: 0, y: 0, duration: 0.25, ease: 'power3.inOut' });
+    gsap.to(line2Ref.current, { opacity: 1, duration: 0.2, ease: 'power2.inOut', delay: 0.1 });
+    gsap.to(line3Ref.current, { rotation: 0, y: 0, duration: 0.25, ease: 'power3.inOut' });
 
-    // Animate modal out
-    gsap.to(menuRef.current, {
-      opacity: 0,
-      scale: 0.9,
-      duration: 0.15,
-      ease: 'power2.in',
-      onComplete: () => setIsOpen(false)
-    });
+    // Animate nav collapse
+    if (navRef.current) {
+      gsap.to(navRef.current.children, {
+        opacity: 0,
+        y: -8,
+        duration: 0.15,
+        ease: 'power2.in'
+      });
+
+      gsap.to(navRef.current, {
+        maxHeight: 0,
+        maxWidth: 0,
+        opacity: 0,
+        paddingTop: 0,
+        duration: 0.3,
+        ease: 'power3.inOut',
+        delay: 0.1,
+        onComplete: () => setIsOpen(false)
+      });
+    }
   };
 
   const handleLinkClick = () => {
@@ -66,25 +82,34 @@ export default function Menu() {
           </Link>
         )}
 
-        <button
-          className="hamburger"
-          onClick={isOpen ? closeMenu : openMenu}
-          aria-label={isOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span ref={line1Ref} className="hamburger-line"></span>
-          <span ref={line2Ref} className="hamburger-line"></span>
-          <span ref={line3Ref} className="hamburger-line"></span>
-        </button>
-      </header>
-
-      <div ref={menuRef} className={`menu-modal ${isOpen ? 'menu-open' : 'menu-closed'}`}>
-        <nav ref={navRef} className="menu-nav">
-          <Link to="/" onClick={handleLinkClick}>Home</Link>
-          <Link to="/portfolio" onClick={handleLinkClick}>Portfolio</Link>
-          <Link to="/the-studio" onClick={handleLinkClick}>The Studio</Link>
-          <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
+        {/* Desktop navigation */}
+        <nav className="desktop-nav">
+          <Link to="/" className={location.pathname === '/' ? 'active' : ''}>Home</Link>
+          <Link to="/portfolio" className={location.pathname === '/portfolio' ? 'active' : ''}>Portfolio</Link>
+          <Link to="/the-studio" className={location.pathname === '/the-studio' ? 'active' : ''}>The Studio</Link>
+          <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
         </nav>
-      </div>
+
+        {/* Mobile menu container with glassmorphic background */}
+        <div ref={menuRef} className={`mobile-menu-container ${isOpen ? 'menu-open' : ''}`}>
+          <button
+            className="hamburger"
+            onClick={isOpen ? closeMenu : openMenu}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          >
+            <span ref={line1Ref} className="hamburger-line"></span>
+            <span ref={line2Ref} className="hamburger-line"></span>
+            <span ref={line3Ref} className="hamburger-line"></span>
+          </button>
+
+          <nav ref={navRef} className={`menu-nav ${isOpen ? 'menu-nav-open' : ''}`}>
+            <Link to="/" onClick={handleLinkClick}>Home</Link>
+            <Link to="/portfolio" onClick={handleLinkClick}>Portfolio</Link>
+            <Link to="/the-studio" onClick={handleLinkClick}>The Studio</Link>
+            <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
+          </nav>
+        </div>
+      </header>
     </>
   );
 }
