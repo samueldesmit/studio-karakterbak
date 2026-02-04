@@ -12,7 +12,6 @@ export default function Home() {
 
   return (
     <div className="hero">
-      <div className="hero-bg-image" aria-hidden="true" />
       <Logo3D />
     </div>
   );

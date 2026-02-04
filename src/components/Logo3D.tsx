@@ -1,7 +1,34 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, ContactShadows } from '@react-three/drei';
+import { useGLTF, Environment, ContactShadows, Html, useProgress } from '@react-three/drei';
 import * as THREE from 'three';
+
+function Loader() {
+  const { progress } = useProgress();
+  return (
+    <Html center>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '12px',
+        color: '#333',
+        fontFamily: 'system-ui, sans-serif'
+      }}>
+        <div style={{
+          width: '60px',
+          height: '60px',
+          border: '3px solid #eee',
+          borderTopColor: '#333',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <span style={{ fontSize: '14px' }}>{progress.toFixed(0)}%</span>
+      </div>
+    </Html>
+  );
+}
 
 interface PhysicsState {
   position: { x: number; y: number };
@@ -11,7 +38,7 @@ interface PhysicsState {
 }
 
 function Logo({ physics, scale }: { physics: React.MutableRefObject<PhysicsState>; scale: number }) {
-  const { scene } = useGLTF('/logo_studio.glb');
+  const { scene } = useGLTF('/logo_studio.glb', true);
   const meshRef = useRef<THREE.Group>(null);
 
   const baseRotationX = Math.PI / 2;
@@ -206,7 +233,7 @@ export default function Logo3D() {
   };
   const handleTouchEnd = () => handleEnd();
 
-  const scale = isMobile ? 0.075 : 0.15;
+  const scale = isMobile ? 7.5 : 15;
 
   return (
     <div
@@ -224,10 +251,12 @@ export default function Logo3D() {
         camera={{ position: [0, 0, 15], fov: 50 }}
         style={{ background: 'transparent', pointerEvents: 'none' }}
       >
-        <Scene physics={physics} scale={scale} />
+        <Suspense fallback={<Loader />}>
+          <Scene physics={physics} scale={scale} />
+        </Suspense>
       </Canvas>
     </div>
   );
 }
 
-useGLTF.preload('/logo_studio.glb');
+useGLTF.preload('/logo_studio.glb', true);

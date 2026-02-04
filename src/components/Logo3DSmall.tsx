@@ -4,7 +4,7 @@ import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 function Logo() {
-  const { scene } = useGLTF('/logo_studio.glb');
+  const { scene } = useGLTF('/logo_studio.glb', true);
   const meshRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -18,7 +18,7 @@ function Logo() {
     <primitive
       ref={meshRef}
       object={scene}
-      scale={0.12}
+      scale={12}
       position={[0, 0, 0]}
       rotation={[Math.PI / 2, 0, 0]}
     />

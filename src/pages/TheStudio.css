@@ -36,8 +36,8 @@
 .collage {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  max-width: 900px;
+  gap: 10px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -45,9 +45,7 @@
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Make certain items bigger - spanning 2 columns */
@@ -72,17 +70,28 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
 }
 
-.collage-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  z-index: 10;
+/* Skeleton loading */
+.collage-item.loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  min-height: 150px;
 }
 
-.collage-item:hover img {
-  transform: scale(1.08);
+.collage-item.loading img {
+  opacity: 0;
+}
+
+.collage-item img.loaded {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* Image Modal */
