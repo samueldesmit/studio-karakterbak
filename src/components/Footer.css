@@ -1,8 +1,19 @@
 .footer {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 0;
+  right: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: flex-end;
   z-index: 100;
+  pointer-events: none;
+}
+
+.footer > * {
+  pointer-events: auto;
 }
 
 .footer-instagram {
