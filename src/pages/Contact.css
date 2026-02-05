@@ -18,20 +18,20 @@
 }
 
 .contact::before {
-  width: 450px;
-  height: 450px;
+  width: 550px;
+  height: 550px;
   background: var(--color-gold);
-  top: 5%;
-  left: -100px;
-  opacity: 0.4;
+  top: -150px;
+  right: -100px;
+  opacity: 0.5;
 }
 
 .contact::after {
-  width: 750px;
-  height: 750px;
+  width: 700px;
+  height: 700px;
   background: var(--color-burgundy);
-  bottom: -150px;
-  right: -150px;
+  bottom: -200px;
+  left: -150px;
   opacity: 0.5;
 }
 

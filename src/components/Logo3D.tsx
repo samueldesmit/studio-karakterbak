@@ -237,7 +237,7 @@ export default function Logo3D() {
 
   return (
     <div
-      style={{ width: '100%', height: '100%', cursor: 'grab' }}
+      style={{ width: '100%', height: '100%', cursor: 'grab', position: 'relative', zIndex: 3 }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
