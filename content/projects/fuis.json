@@ -1,15 +1,14 @@
 {
   "artist": "FUIS",
-  "featured": false,
-  "order": 4,
-  "title": "Album Title",
+  "featured": true,
+  "order": 1,
+  "title": "Here's To Asking For Help",
   "id": "fuis",
   "image": "/uploads/fuis.jpeg",
-  "year": 2023,
+  "year": 2024,
   "services": [
     "Production",
     "Mixing",
-    "Mastering",
     "Drums"
   ],
   "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator"
