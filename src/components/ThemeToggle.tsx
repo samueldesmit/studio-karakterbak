@@ -18,7 +18,7 @@ export default function ThemeToggle() {
   return (
     <button
       className="theme-toggle"
-      onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+      onClick={(e) => { e.stopPropagation(); setTheme(t => t === 'light' ? 'dark' : 'light'); }}
       aria-label={theme === 'light' ? 'Donkere modus' : 'Lichte modus'}
     >
       {theme === 'light' ? (

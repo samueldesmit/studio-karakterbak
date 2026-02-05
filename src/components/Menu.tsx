@@ -94,22 +94,26 @@ export default function Menu() {
 
         {/* Mobile menu container with glassmorphic background */}
         <div ref={menuRef} className={`mobile-menu-container ${isOpen ? 'menu-open' : ''}`}>
-          <button
-            className="hamburger"
-            onClick={isOpen ? closeMenu : openMenu}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span ref={line1Ref} className="hamburger-line"></span>
-            <span ref={line2Ref} className="hamburger-line"></span>
-            <span ref={line3Ref} className="hamburger-line"></span>
-          </button>
+          <div className="mobile-menu-top">
+            <div className={`mobile-theme-toggle ${isOpen ? 'visible' : ''}`}>
+              <ThemeToggle />
+            </div>
+            <button
+              className="hamburger"
+              onClick={isOpen ? closeMenu : openMenu}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            >
+              <span ref={line1Ref} className="hamburger-line"></span>
+              <span ref={line2Ref} className="hamburger-line"></span>
+              <span ref={line3Ref} className="hamburger-line"></span>
+            </button>
+          </div>
 
           <nav ref={navRef} className={`menu-nav ${isOpen ? 'menu-nav-open' : ''}`}>
             <Link to="/portfolio" onClick={handleLinkClick}>Portfolio</Link>
             <Link to="/the-studio" onClick={handleLinkClick}>Studio</Link>
             <Link to="/over" onClick={handleLinkClick}>Over</Link>
             <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
-            <ThemeToggle />
           </nav>
         </div>
       </header>

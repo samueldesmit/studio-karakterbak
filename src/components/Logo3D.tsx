@@ -37,8 +37,22 @@ interface PhysicsState {
   spinVelocity: { x: number; y: number };
 }
 
+function useTheme() {
+  const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme') || 'light');
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') || 'light');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+  return theme;
+}
+
 function Logo({ physics, scale }: { physics: React.MutableRefObject<PhysicsState>; scale: number }) {
-  const { scene } = useGLTF('/logo_studio.glb', true);
+  const theme = useTheme();
+  const glbPath = theme === 'dark' ? '/fnish wit Untitled.glb' : '/logo_studio.glb';
+  const { scene } = useGLTF(glbPath, true);
   const meshRef = useRef<THREE.Group>(null);
 
   const baseRotationX = Math.PI / 2;
@@ -260,3 +274,4 @@ export default function Logo3D() {
 }
 
 useGLTF.preload('/logo_studio.glb', true);
+useGLTF.preload('/fnish wit Untitled.glb', true);

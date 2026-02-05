@@ -1,15 +1,28 @@
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
+function useTheme() {
+  const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme') || 'light');
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setTheme(document.documentElement.getAttribute('data-theme') || 'light');
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => observer.disconnect();
+  }, []);
+  return theme;
+}
+
 function Logo() {
-  const { scene } = useGLTF('/logo_studio.glb', true);
+  const theme = useTheme();
+  const glbPath = theme === 'dark' ? '/fnish wit Untitled.glb' : '/logo_studio.glb';
+  const { scene } = useGLTF(glbPath, true);
   const meshRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Gentle back and forth rotation on z-axis
       meshRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 1.5) * 0.3;
     }
   });
