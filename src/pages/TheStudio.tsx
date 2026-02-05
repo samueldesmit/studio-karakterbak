@@ -47,7 +47,7 @@ export default function TheStudio() {
 
   return (
     <div className="studio-page">
-      <h1>{studioSettings.title || 'The Studio'}</h1>
+      <h1>{studioSettings.title || 'Studio'}</h1>
       <div className="collage">
         {pictures.map((picture, index) => (
           <ImageWithSkeleton

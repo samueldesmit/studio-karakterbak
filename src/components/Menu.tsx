@@ -85,7 +85,7 @@ export default function Menu() {
         {/* Desktop navigation */}
         <nav className="desktop-nav">
           <Link to="/portfolio" className={location.pathname === '/portfolio' ? 'active' : ''}>Portfolio</Link>
-          <Link to="/the-studio" className={location.pathname === '/the-studio' ? 'active' : ''}>The Studio</Link>
+          <Link to="/the-studio" className={location.pathname === '/the-studio' ? 'active' : ''}>Studio</Link>
           <Link to="/over" className={location.pathname === '/over' ? 'active' : ''}>Over</Link>
           <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
         </nav>
@@ -104,7 +104,7 @@ export default function Menu() {
 
           <nav ref={navRef} className={`menu-nav ${isOpen ? 'menu-nav-open' : ''}`}>
             <Link to="/portfolio" onClick={handleLinkClick}>Portfolio</Link>
-            <Link to="/the-studio" onClick={handleLinkClick}>The Studio</Link>
+            <Link to="/the-studio" onClick={handleLinkClick}>Studio</Link>
             <Link to="/over" onClick={handleLinkClick}>Over</Link>
             <Link to="/contact" onClick={handleLinkClick}>Contact</Link>
           </nav>

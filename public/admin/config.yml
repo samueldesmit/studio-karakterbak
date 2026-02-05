@@ -99,6 +99,39 @@ collections:
   - name: "settings"
     label: "Site Settings"
     files:
+      - label: "Home Page"
+        name: "home"
+        file: "content/settings/home.json"
+        fields:
+          - {
+              label: "Background Image",
+              name: "backgroundImage",
+              widget: "image",
+              hint: "Background image shown behind the 3D logo on the homepage",
+            }
+
+      - label: "Over Page"
+        name: "over"
+        file: "content/settings/over.json"
+        fields:
+          - {
+              label: "Page Title",
+              name: "title",
+              widget: "string",
+              default: "Over",
+            }
+          - {
+              label: "Photo",
+              name: "image",
+              widget: "image",
+              hint: "Photo of Maurits",
+            }
+          - label: "Paragraphs"
+            name: "paragraphs"
+            widget: "list"
+            field: { label: "Paragraph", name: "paragraph", widget: "text" }
+            hint: "Each item is a paragraph of text"
+
       - label: "Contact Info"
         name: "contact"
         file: "content/settings/contact.json"
@@ -127,7 +160,7 @@ collections:
               label: "About Title",
               name: "title",
               widget: "string",
-              default: "The Studio",
+              default: "Studio",
             }
           - {
               label: "About Text",

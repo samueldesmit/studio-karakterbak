@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   transition: transform 0.3s ease;
-  margin: -20px 0;
+  margin: -20px 0 -20px -35px;
 }
 
 .header-logo:hover {
