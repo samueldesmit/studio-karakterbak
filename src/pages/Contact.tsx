@@ -28,13 +28,13 @@ export default function Contact() {
       }).then((res) => res.json());
 
       if (res.success) {
-        setMessage("Thanks for your message! I'll get back to you soon.");
+        setMessage("Bedankt voor je bericht! Ik neem snel contact met je op.");
         (event.target as HTMLFormElement).reset();
       } else {
-        setMessage("Something went wrong. Please try again.");
+        setMessage("Er ging iets mis. Probeer het opnieuw.");
       }
     } catch {
-      setMessage("Something went wrong. Please try again.");
+      setMessage("Er ging iets mis. Probeer het opnieuw.");
     } finally {
       setIsSubmitting(false);
     }
@@ -44,36 +44,36 @@ export default function Contact() {
     <div className="contact">
       <img src={logoPng} alt="" className="page-bg-logo" aria-hidden="true" />
       <div className="contact-inner">
-        <h1>Get in Touch</h1>
+        <h1>Neem Contact Op</h1>
         <p className="contact-text">
-          Have a project in mind? Let's talk about how we can work together.
+          Heb je een project in gedachten? Laten we praten over hoe we kunnen samenwerken.
         </p>
         <form onSubmit={onSubmit} className="contact-form">
           <div className="input-row">
             <input 
               type="text" 
               name="name" 
-              placeholder="Your name" 
+              placeholder="Je naam"
               required 
             />
             <input 
               type="email" 
               name="email" 
-              placeholder="Your email" 
+              placeholder="Je e-mail"
               required 
             />
           </div>
           <textarea 
             rows={8} 
             name="message" 
-            placeholder="Your message" 
+            placeholder="Je bericht"
             required
           />
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {isSubmitting ? 'Verzenden...' : 'Verstuur Bericht'}
           </button>
         </form>
-        {message && <p className={`form-message ${message.includes('Thanks') ? 'success' : 'error'}`}>{message}</p>}
+        {message && <p className={`form-message ${message.includes('Bedankt') ? 'success' : 'error'}`}>{message}</p>}
       </div>
     </div>
   );
