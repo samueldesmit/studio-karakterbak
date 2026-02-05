@@ -1,11 +1,14 @@
 {
-  "id": "jungle-by-night",
-  "artist": "Jungle by Night",
-  "title": "Album Title",
-  "year": 2024,
-  "services": ["Mixing"],
-  "image": "/uploads/jungle-by-night.jpg",
-  "spotifyEmbed": "https://open.spotify.com/embed/artist/2StcyX3fmelae5agBHIkDO?utm_source=generator",
+  "releaseType": "EP",
+  "artist": "The Sunset Society",
   "featured": true,
-  "order": 1
+  "order": 1,
+  "title": "Spaanse Suksessen",
+  "id": "the sunset society",
+  "image": "/uploads/scherm­afbeelding-2026-02-05-om-21.38.15.png",
+  "year": 2000,
+  "services": [
+    "Mixing"
+  ],
+  "spotifyEmbed": "https://open.spotify.com/embed/artist/2StcyX3fmelae5agBHIkDO?utm_source=generator"
 }
