@@ -1,11 +1,14 @@
 {
-  "id": "juliet",
-  "artist": "Juliet",
-  "title": "Album Title",
-  "year": 2022,
-  "services": ["Mixing", "Mastering"],
-  "image": "/uploads/juliet.jpeg",
-  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
+  "releaseType": "Album",
+  "artist": "Nusantara Beat",
   "featured": false,
-  "order": 6
+  "order": 1,
+  "title": "Nusantara Beat",
+  "id": "nusantara beat",
+  "image": "/uploads/scherm­afbeelding-2026-02-05-om-21.02.13.png",
+  "year": 2025,
+  "services": [
+    "Mixing"
+  ],
+  "spotifyEmbed": "https://open.spotify.com/embed/album/2sbFG9DBvAaju0TcE3AHw9?utm_source=generator"
 }
