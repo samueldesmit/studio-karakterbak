@@ -11,6 +11,7 @@ interface Project {
   services: string[];
   image: string;
   spotifyEmbed: string;
+  releaseType?: string;
   featured?: boolean;
   order?: number;
 }
@@ -72,7 +73,7 @@ export default function Portfolio() {
             </div>
             <div className="project-info">
               <div className="project-header">
-                <h2>{project.artist}</h2>
+                <h2>{project.artist} — {project.title}{project.releaseType ? ` (${project.releaseType})` : ''}</h2>
                 <span className="project-year">{project.year}</span>
               </div>
               <div className="project-services">

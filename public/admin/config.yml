@@ -43,6 +43,7 @@ collections:
     folder: "content/projects"
     create: true
     slug: "{{slug}}"
+    summary: "{{artist}} — {{title}}"
     extension: "json"
     format: "json"
     fields:
@@ -62,6 +63,14 @@ collections:
           min: 2000,
           max: 2030,
         }
+      - label: "Release Type"
+        name: "releaseType"
+        widget: "select"
+        required: false
+        options:
+          - { label: "Album", value: "Album" }
+          - { label: "EP", value: "EP" }
+          - { label: "Single", value: "Single" }
       - label: "Services"
         name: "services"
         widget: "select"
@@ -71,19 +80,13 @@ collections:
           - { label: "Mixing", value: "Mixing" }
           - { label: "Mastering", value: "Mastering" }
           - { label: "Drums", value: "Drums" }
+          - { label: "Songwriting", value: "Songwriting" }
       - { label: "Image", name: "image", widget: "image" }
       - {
           label: "Spotify Embed URL",
           name: "spotifyEmbed",
           widget: "string",
           hint: "e.g., https://open.spotify.com/embed/artist/...",
-        }
-      - {
-          label: "Featured",
-          name: "featured",
-          widget: "boolean",
-          default: false,
-          required: false,
         }
       - {
           label: "Order",
