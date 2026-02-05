@@ -1,11 +1,15 @@
 {
-  "id": "josephin",
-  "artist": "Josephin",
-  "title": "Album Title",
-  "year": 2023,
-  "services": ["Production", "Drums"],
-  "image": "/uploads/josephin.jpeg",
-  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
+  "artist": "Josephin Odhil",
   "featured": false,
-  "order": 5
+  "order": 2,
+  "title": "Volatile",
+  "id": "josephin ",
+  "image": "/uploads/josephin.jpeg",
+  "year": 2023,
+  "services": [
+    "Production",
+    "Drums",
+    "Mixing"
+  ],
+  "spotifyEmbed": "https://open.spotify.com/embed/album/6zzOvZa5VjuqCjbch0KMan?utm_source=generator"
 }
