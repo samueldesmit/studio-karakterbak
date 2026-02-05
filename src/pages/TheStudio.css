@@ -23,7 +23,7 @@
   background: var(--color-gold);
   top: -150px;
   right: -100px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .studio-page::after {
@@ -32,7 +32,7 @@
   background: var(--color-burgundy);
   bottom: -200px;
   left: -150px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .studio-page h1 {
@@ -83,7 +83,7 @@
 
 /* Skeleton loading */
 .collage-item.loading {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 75%);
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.5s infinite;
   min-height: 150px;

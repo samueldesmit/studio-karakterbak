@@ -23,7 +23,7 @@
   background: var(--color-gold);
   top: -150px;
   right: -100px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .portfolio::after {
@@ -32,7 +32,7 @@
   background: var(--color-burgundy);
   bottom: -200px;
   left: -150px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .portfolio h1 {
@@ -52,10 +52,10 @@
 .filter-btn {
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface);
   border: 2px solid var(--color-burgundy);
   border-radius: 2rem;
-  color: var(--color-burgundy);
+  color: var(--pill-text);
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
@@ -64,7 +64,7 @@
 
 .filter-btn:hover {
   background: rgba(142, 39, 28, 0.1);
-  color: var(--color-burgundy);
+  color: var(--pill-text);
 }
 
 .filter-btn.active {
@@ -80,10 +80,10 @@
 }
 
 .project {
-  background: #ffffff70;
-padding: 1rem;
+  background: var(--surface-card);
+  padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid rgba(224, 195, 149, 0.2);
+  border: 1px solid var(--card-border);
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-template-rows: auto auto;
@@ -96,7 +96,7 @@ padding: 1rem;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 0.25rem;
-  box-shadow: 0 4px 20px rgba(142, 39, 28, 0.08);
+  box-shadow: 0 4px 20px var(--card-shadow);
 }
 
 .project-image img {
@@ -111,7 +111,7 @@ padding: 1rem;
 }
 
 .project:hover .project-image {
-  box-shadow: 0 8px 30px rgba(142, 39, 28, 0.12);
+  box-shadow: 0 8px 30px var(--card-shadow-hover);
 }
 
 .project-info {
@@ -134,7 +134,7 @@ padding: 1rem;
 
 .project-year {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--text-muted);
   font-weight: 300;
 }
 
@@ -147,9 +147,9 @@ padding: 1rem;
 .service-tag {
   font-size: 0.7rem;
   padding: 0.25rem 0.6rem;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--surface);
   border-radius: 1rem;
-  color: var(--color-burgundy);
+  color: var(--pill-text);
   font-weight: 500;
   border: 1.5px solid var(--color-burgundy);
 }
@@ -174,10 +174,10 @@ padding: 1rem;
   .project {
     grid-template-columns: 80px 1fr;
     gap: 0.75rem 1rem;
-    background: #ffffff70;
+    background: var(--surface-card);
     border-radius: 0.5rem;
     padding: 0.75rem;
-    border: 1px solid rgba(224, 195, 149, 0.2);
+    border: 1px solid var(--card-border);
   }
 
   .project-image {

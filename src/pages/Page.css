@@ -23,7 +23,7 @@
   background: var(--color-gold);
   top: -150px;
   right: -100px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .page::after {
@@ -32,7 +32,7 @@
   background: var(--color-burgundy);
   bottom: -200px;
   left: -150px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .page h1 {
@@ -44,5 +44,5 @@
 
 .page p {
   font-size: 1.125rem;
-  color: #666;
+  color: var(--text-secondary);
 }

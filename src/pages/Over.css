@@ -23,7 +23,7 @@
   background: var(--color-gold);
   top: -150px;
   right: -100px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .over::after {
@@ -32,7 +32,7 @@
   background: var(--color-burgundy);
   bottom: -200px;
   left: -150px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .over h1 {
@@ -51,7 +51,7 @@
 
 .over-text p {
   font-size: 1.05rem;
-  color: #444;
+  color: var(--text-dim);
   line-height: 1.8;
   margin-bottom: 1rem;
 }
@@ -59,7 +59,7 @@
 .over-image {
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(142, 39, 28, 0.08);
+  box-shadow: 0 4px 20px var(--card-shadow);
 }
 
 .over-image img {

@@ -28,7 +28,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(165deg, #f8f4f0 0%, #f0e8e0 50%, #f5ede5 100%);
+  background: linear-gradient(165deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
   opacity: 0.65;
   pointer-events: none;
   z-index: 1;
@@ -51,7 +51,7 @@
   background: var(--color-gold);
   top: -150px;
   right: -100px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
 
 .hero::after {
@@ -60,5 +60,5 @@
   background: var(--color-burgundy);
   bottom: -200px;
   left: -150px;
-  opacity: 0.5;
+  opacity: var(--orb-opacity);
 }
