@@ -1,10 +1,13 @@
 {
-  "id": "test-youtube",
-  "artist": "Artist Name",
-  "title": "Test YouTube",
-  "year": 2024,
-  "releaseType": "Single",
-  "services": ["Production", "Mixing"],
+  "id": "Levi-boon",
+  "artist": "Levi Boon",
+  "title": "What Once Was (Official Live Video)",
+  "year": 2025,
+  "releaseType": null,
+  "services": [
+    "Mixing",
+    "Mastering"
+  ],
   "youtubeUrl": "https://www.youtube.com/watch?v=U4j4AlhigYE",
   "order": 11
 }
