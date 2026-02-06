@@ -81,12 +81,20 @@ collections:
           - { label: "Mastering", value: "Mastering" }
           - { label: "Drums", value: "Drums" }
           - { label: "Songwriting", value: "Songwriting" }
-      - { label: "Image", name: "image", widget: "image" }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Leave empty for YouTube projects (thumbnail is used automatically)" }
       - {
           label: "Spotify Embed URL",
           name: "spotifyEmbed",
           widget: "string",
+          required: false,
           hint: "e.g., https://open.spotify.com/embed/artist/...",
+        }
+      - {
+          label: "YouTube URL",
+          name: "youtubeUrl",
+          widget: "string",
+          required: false,
+          hint: "e.g., https://www.youtube.com/watch?v=... (shown as link when no Spotify embed)",
         }
       - {
           label: "Order",
@@ -112,6 +120,13 @@ collections:
               widget: "image",
               hint: "Background image shown behind the 3D logo on the homepage",
             }
+          - {
+              label: "Show 3D Logo",
+              name: "show3DLogo",
+              widget: "boolean",
+              default: true,
+              hint: "Turn the 3D logo on or off on the homepage",
+            }
 
       - label: "Over Page"
         name: "over"
@@ -128,6 +143,21 @@ collections:
               name: "image",
               widget: "image",
               hint: "Photo of Maurits",
+            }
+          - {
+              label: "Download File",
+              name: "downloadFile",
+              widget: "file",
+              required: false,
+              hint: "PDF or other file visitors can download (e.g. gear overview)",
+            }
+          - {
+              label: "Download Button Text",
+              name: "downloadLabel",
+              widget: "string",
+              required: false,
+              default: "Download Gear Overview",
+              hint: "Text shown on the download button",
             }
           - label: "Paragraphs"
             name: "paragraphs"

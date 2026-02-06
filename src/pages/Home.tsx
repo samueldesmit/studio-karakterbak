@@ -4,6 +4,7 @@ import './Home.css';
 
 interface HomeSettings {
   backgroundImage: string;
+  show3DLogo?: boolean;
 }
 
 const homeModule = import.meta.glob<{ default: HomeSettings }>('../../content/settings/home.json', { eager: true });
@@ -24,7 +25,7 @@ export default function Home() {
         style={{ backgroundImage: `url('${homeSettings.backgroundImage}')` }}
       />
       <div className="hero-gradient-overlay" />
-      <Logo3D />
+      {homeSettings.show3DLogo !== false && <Logo3D />}
     </div>
   );
 }

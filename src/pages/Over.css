@@ -1,7 +1,7 @@
 .over {
   min-height: 100vh;
   padding: 7rem 2rem 2rem;
-  max-width: 1100px;
+  max-width: 1440px;
   margin: 0 auto;
   position: relative;
 }
@@ -54,6 +54,26 @@
   color: var(--text-dim);
   line-height: 1.8;
   margin-bottom: 1rem;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--surface);
+  border: 2px solid var(--color-burgundy);
+  border-radius: 2rem;
+  color: var(--pill-text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+  background: rgba(142, 39, 28, 0.1);
 }
 
 .over-image {
