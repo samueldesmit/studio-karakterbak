@@ -1,11 +1,15 @@
 {
-  "id": "sunset-society",
+  "releaseType": "EP",
   "artist": "The Sunset Society",
-  "title": "Album Title",
-  "year": 2021,
-  "services": ["Production", "Mixing", "Mastering", "Drums"],
-  "image": "/uploads/sunset-society.jpeg",
-  "spotifyEmbed": "https://open.spotify.com/embed/album/7h18DzFGOFR0Sk7xk9cFul?utm_source=generator",
   "featured": false,
-  "order": 10
+  "order": 10,
+  "title": "The Sunset Society",
+  "id": "sunset-society",
+  "image": "/uploads/sunset-society.jpeg",
+  "year": 2000,
+  "services": [
+    "Production",
+    "Mixing"
+  ],
+  "spotifyEmbed": "https://open.spotify.com/embed/album/2T5ZDWhvbjrtc9UMSDAkaE?utm_source=generator"
 }
