@@ -1,22 +1,11 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
-
-function useTheme() {
-  const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme') || 'light');
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setTheme(document.documentElement.getAttribute('data-theme') || 'light');
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
-  return theme;
-}
+import { useTheme } from '../ThemeContext';
 
 function Logo() {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const glbPath = theme === 'dark' ? '/fnish wit Untitled.glb' : '/logo_studio.glb';
   const { scene } = useGLTF(glbPath, true);
   const meshRef = useRef<THREE.Group>(null);

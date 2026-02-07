@@ -1,24 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useTheme } from '../ThemeContext';
 import './ThemeToggle.css';
 
-function getInitialTheme(): 'light' | 'dark' {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark' || saved === 'light') return saved;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-}
-
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>(getInitialTheme);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button
       className="theme-toggle"
-      onClick={(e) => { e.stopPropagation(); setTheme(t => t === 'light' ? 'dark' : 'light'); }}
+      onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
       aria-label={theme === 'light' ? 'Donkere modus' : 'Lichte modus'}
     >
       {theme === 'light' ? (

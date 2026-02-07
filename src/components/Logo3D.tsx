@@ -2,6 +2,7 @@ import { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment, ContactShadows, Html, useProgress } from '@react-three/drei';
 import * as THREE from 'three';
+import { useTheme } from '../ThemeContext';
 
 function Loader() {
   const { progress } = useProgress();
@@ -37,20 +38,8 @@ interface PhysicsState {
   spinVelocity: { x: number; y: number };
 }
 
-function useTheme() {
-  const [theme, setTheme] = useState(document.documentElement.getAttribute('data-theme') || 'light');
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setTheme(document.documentElement.getAttribute('data-theme') || 'light');
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
-  return theme;
-}
-
 function Logo({ physics, scale }: { physics: React.MutableRefObject<PhysicsState>; scale: number }) {
-  const theme = useTheme();
+  const { theme } = useTheme();
   const glbPath = theme === 'dark' ? '/fnish wit Untitled.glb' : '/logo_studio.glb';
   const { scene } = useGLTF(glbPath, true);
   const meshRef = useRef<THREE.Group>(null);
@@ -138,6 +127,11 @@ export default function Logo3D() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const bounds = { x: 8, y: 5 };
+  const MAX_SPEED = 0.08;
+  const MAX_SPIN = 0.03;
+  const FRICTION = 0.995;
+
+  const clamp = (val: number, max: number) => Math.max(-max, Math.min(max, val));
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -153,6 +147,12 @@ export default function Logo3D() {
       if (!isDragging.current) {
         const p = physics.current;
 
+        // Clamp velocities
+        p.velocity.x = clamp(p.velocity.x, MAX_SPEED);
+        p.velocity.y = clamp(p.velocity.y, MAX_SPEED);
+        p.spinVelocity.x = clamp(p.spinVelocity.x, MAX_SPIN);
+        p.spinVelocity.y = clamp(p.spinVelocity.y, MAX_SPIN);
+
         // Apply velocity to position
         p.position.x += p.velocity.x;
         p.position.y += p.velocity.y;
@@ -161,7 +161,11 @@ export default function Logo3D() {
         p.rotation.x += p.spinVelocity.x;
         p.rotation.y += p.spinVelocity.y;
 
-        // No friction - keeps moving forever like in space!
+        // Gentle friction
+        p.velocity.x *= FRICTION;
+        p.velocity.y *= FRICTION;
+        p.spinVelocity.x *= FRICTION;
+        p.spinVelocity.y *= FRICTION;
 
         // Bounce off walls
         if (p.position.x > bounds.x) {
@@ -216,13 +220,13 @@ export default function Logo3D() {
     physics.current.position.x += worldDelta.x;
     physics.current.position.y += worldDelta.y;
 
-    // Track velocity for throwing
-    physics.current.velocity.x = worldDelta.x * (5 / dt);
-    physics.current.velocity.y = worldDelta.y * (5 / dt);
+    // Track velocity for throwing (clamped to max speed)
+    physics.current.velocity.x = clamp(worldDelta.x * (5 / dt), MAX_SPEED);
+    physics.current.velocity.y = clamp(worldDelta.y * (5 / dt), MAX_SPEED);
 
-    // Add spin based on movement
-    physics.current.spinVelocity.x = deltaY * 0.002;
-    physics.current.spinVelocity.y = deltaX * 0.002;
+    // Add spin based on movement (clamped)
+    physics.current.spinVelocity.x = clamp(deltaY * 0.002, MAX_SPIN);
+    physics.current.spinVelocity.y = clamp(deltaX * 0.002, MAX_SPIN);
 
     lastPos.current = { x: clientX, y: clientY };
     lastTime.current = now;
