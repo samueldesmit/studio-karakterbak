@@ -229,9 +229,10 @@
 .youtube-embed {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
-  border-radius: 0.5rem;
+  padding-bottom: 100%;
+  border-radius: 0.25rem;
   overflow: hidden;
+  box-shadow: 0 4px 20px var(--card-shadow);
 }
 
 .youtube-embed iframe {
