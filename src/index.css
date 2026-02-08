@@ -35,37 +35,6 @@
   --pill-text: var(--color-burgundy);
 }
 
-[data-theme="dark"] {
-  --bg-primary: #0f0f0f;
-  --bg-secondary: #1a1a1a;
-  --bg-tertiary: #141414;
-  --text-primary: #e8e4e0;
-  --text-secondary: #a0a0a0;
-  --text-muted: #777777;
-  --text-dim: #bbbbbb;
-  --surface: rgba(255, 255, 255, 0.07);
-  --surface-hover: rgba(255, 255, 255, 0.12);
-  --surface-card: rgba(255, 255, 255, 0.06);
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --glass-inset: rgba(255, 255, 255, 0.1);
-  --glass-active: rgba(255, 255, 255, 0.15);
-  --glass-hover: rgba(255, 255, 255, 0.12);
-  --hamburger: #e8e4e0;
-  --placeholder: #666666;
-  --input-border: rgba(142, 39, 28, 0.5);
-  --focus-shadow: rgba(142, 39, 28, 0.25);
-  --btn-hover: #c44536;
-  --skeleton-bg: #1a1a1a;
-  --skeleton-highlight: #2a2a2a;
-  --orb-opacity: 0.25;
-  --success-text: #e0c395;
-  --card-border: rgba(224, 195, 149, 0.1);
-  --card-shadow: rgba(0, 0, 0, 0.2);
-  --card-shadow-hover: rgba(0, 0, 0, 0.3);
-  --pill-text: #ffffff;
-}
 
 * {
   margin: 0;
@@ -79,10 +48,6 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color-scheme: light;
-}
-
-[data-theme="dark"] {
-  color-scheme: dark;
 }
 
 body {

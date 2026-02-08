@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
-import Logo3DSmall from './Logo3DSmall';
-import ThemeToggle from './ThemeToggle';
+import LogoSVG from './LogoSVG';
 import './Menu.css';
 
 export default function Menu() {
@@ -79,7 +78,7 @@ export default function Menu() {
       <header className="header">
         {!isHomePage && (
           <Link to="/" className="header-logo">
-            <Logo3DSmall />
+            <LogoSVG style={{ width: '80px', height: '80px' }} />
           </Link>
         )}
 
@@ -89,15 +88,11 @@ export default function Menu() {
           <Link to="/the-studio" className={location.pathname === '/the-studio' ? 'active' : ''}>Studio</Link>
           <Link to="/over" className={location.pathname === '/over' ? 'active' : ''}>Over</Link>
           <Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''}>Contact</Link>
-          <ThemeToggle />
         </nav>
 
         {/* Mobile menu container with glassmorphic background */}
         <div ref={menuRef} className={`mobile-menu-container ${isOpen ? 'menu-open' : ''}`}>
           <div className="mobile-menu-top">
-            <div className={`mobile-theme-toggle ${isOpen ? 'visible' : ''}`}>
-              <ThemeToggle />
-            </div>
             <button
               className="hamburger"
               onClick={isOpen ? closeMenu : openMenu}

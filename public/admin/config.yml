@@ -118,14 +118,7 @@ collections:
               label: "Background Image",
               name: "backgroundImage",
               widget: "image",
-              hint: "Background image shown behind the 3D logo on the homepage",
-            }
-          - {
-              label: "Show 3D Logo",
-              name: "show3DLogo",
-              widget: "boolean",
-              default: true,
-              hint: "Turn the 3D logo on or off on the homepage",
+              hint: "Background image shown on the homepage",
             }
 
       - label: "Over Page"

@@ -56,13 +56,8 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.collage-item:not(.loading):hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
-}
 
 /* Make certain items bigger - spanning 2 columns */
 .collage-item:nth-child(1) {
@@ -88,26 +83,9 @@
   object-fit: cover;
 }
 
-/* Skeleton loading */
-.collage-item.loading {
-  background: linear-gradient(90deg, var(--skeleton-bg) 25%, var(--skeleton-highlight) 50%, var(--skeleton-bg) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.5s infinite;
+.collage-item {
+  background: var(--skeleton-bg);
   min-height: 150px;
-}
-
-.collage-item.loading img {
-  opacity: 0;
-}
-
-.collage-item img.loaded {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
 }
 
 /* Image Modal */

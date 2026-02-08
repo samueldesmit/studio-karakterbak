@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './ThemeContext';
 import Menu from './components/Menu';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -10,19 +9,17 @@ import Over from './pages/Over';
 
 function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <Menu />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/the-studio" element={<TheStudio />} />
-          <Route path="/over" element={<Over />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <Menu />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/the-studio" element={<TheStudio />} />
+        <Route path="/over" element={<Over />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

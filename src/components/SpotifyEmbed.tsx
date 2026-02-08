@@ -10,16 +10,7 @@ export default function SpotifyEmbed({ src }: SpotifyEmbedProps) {
 
   return (
     <div className="spotify-embed">
-      {!isLoaded && (
-        <div className="spotify-skeleton">
-          <div className="skeleton-artwork" />
-          <div className="skeleton-info">
-            <div className="skeleton-line skeleton-title" />
-            <div className="skeleton-line skeleton-artist" />
-          </div>
-          <div className="skeleton-play" />
-        </div>
-      )}
+      {!isLoaded && <div className="spotify-placeholder" />}
       <iframe
         className={`spotify-iframe ${isLoaded ? 'loaded' : ''}`}
         style={{ borderRadius: '12px' }}

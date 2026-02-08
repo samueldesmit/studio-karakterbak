@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import logoPng from '../assets/Logo studio.png';
 import './Contact.css';
 
 export default function Contact() {
@@ -42,7 +41,7 @@ export default function Contact() {
 
   return (
     <div className="contact">
-      <img src={logoPng} alt="" className="page-bg-logo" aria-hidden="true" />
+      <img src="/logo.svg" alt="" className="page-bg-logo" aria-hidden="true" />
       <div className="contact-inner">
         <h1>Neem Contact Op</h1>
         <p className="contact-text">

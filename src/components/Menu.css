@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   transition: transform 0.3s ease;
-  margin: -20px 0 -20px -35px;
+  margin: -20px 0 -20px -15px;
 }
 
 .header-logo:hover {
@@ -110,20 +110,6 @@
 .mobile-menu-top {
   display: flex;
   align-items: center;
-}
-
-.mobile-theme-toggle {
-  width: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: width 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
-  margin: 0;
-}
-
-.mobile-theme-toggle.visible {
-  width: 36px;
-  opacity: 1;
-  margin-right: 0.75rem;
 }
 
 .hamburger {

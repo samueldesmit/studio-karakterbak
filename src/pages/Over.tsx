@@ -1,4 +1,3 @@
-import logoPng from '../assets/Logo studio.png';
 import './Over.css';
 
 interface OverSettings {
@@ -19,7 +18,7 @@ const overSettings: OverSettings = Object.values(overModule)[0]?.default || {
 export default function Over() {
   return (
     <div className="over">
-      <img src={logoPng} alt="" className="page-bg-logo" aria-hidden="true" />
+      <img src="/logo.svg" alt="" className="page-bg-logo" aria-hidden="true" />
       <h1>{overSettings.title || 'Over'}</h1>
       <div className="over-content">
         <div className="over-text">

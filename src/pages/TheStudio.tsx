@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './TheStudio.css';
 
 interface StudioPicture {
@@ -17,28 +17,9 @@ const studioModule = import.meta.glob<{ default: StudioSettings }>('../../conten
 const studioSettings: StudioSettings = Object.values(studioModule)[0]?.default || { title: '', aboutText: '', pictures: [] };
 
 function ImageWithSkeleton({ src, alt, onClick }: { src: string; alt: string; onClick: () => void }) {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
-
-  const imgRef = useCallback((img: HTMLImageElement | null) => {
-    if (img && img.complete) {
-      if (img.naturalWidth > 0) setLoaded(true);
-      else setFailed(true);
-    }
-  }, []);
-
-  if (failed) return null;
-
   return (
-    <div className={`collage-item ${!loaded ? 'loading' : ''}`} onClick={loaded ? onClick : undefined}>
-      <img
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        className={loaded ? 'loaded' : ''}
-        onLoad={() => setLoaded(true)}
-        onError={() => setFailed(true)}
-      />
+    <div className="collage-item" onClick={onClick}>
+      <img src={src} alt={alt} loading="lazy" />
     </div>
   );
 }

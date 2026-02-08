@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import SpotifyEmbed from '../components/SpotifyEmbed';
-import logoPng from '../assets/Logo studio.png';
 import './Portfolio.css';
 
 interface Project {
@@ -35,7 +34,7 @@ const loadedProjects: Project[] = Object.values(projectModules)
 export default function Portfolio() {
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>(window.innerWidth < 1024 ? 'list' : 'grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [projects, setProjects] = useState<Project[]>(loadedProjects);
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export default function Portfolio() {
     const handleResize = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobile(mobile);
-      if (mobile) setViewMode('list');
+      if (mobile) setViewMode('grid');
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -68,7 +67,7 @@ export default function Portfolio() {
 
   return (
     <div className="portfolio">
-      <img src={logoPng} alt="" className="page-bg-logo" aria-hidden="true" />
+      <img src="/logo.svg" alt="" className="page-bg-logo" aria-hidden="true" />
       <h1>Portfolio</h1>
 
       <div className="toolbar">
